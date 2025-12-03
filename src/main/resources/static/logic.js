@@ -11,6 +11,42 @@
 
         function closeModal() {
             document.getElementById('createModal').classList.remove('active');
+            document.getElementById('citaForm').reset();
+            // Ocultar mensaje de error de teléfono
+            const telefonoError = document.getElementById('telefonoError');
+            if (telefonoError) {
+                telefonoError.style.display = 'none';
+            }
+            // Ocultar campos de paciente nuevo si estaban visibles
+            const newPatientFields = document.getElementById('newPatientFields');
+            if (newPatientFields) {
+                newPatientFields.style.display = 'none';
+            }
+            // Mostrar campos de paciente existente
+            const existingPatientFields = document.getElementById('existingPatientFields');
+            if (existingPatientFields) {
+                existingPatientFields.style.display = 'block';
+            }
+        }
+
+        // Función para validar teléfono
+        function validarTelefono() {
+            const telefonoInput = document.getElementById('telefono');
+            const telefonoError = document.getElementById('telefonoError');
+            const telefono = telefonoInput.value.trim();
+            
+            // Validar que solo contenga números y tenga exactamente 10 dígitos
+            const telefonoRegex = /^\d{10}$/;
+            
+            if (telefono && !telefonoRegex.test(telefono)) {
+                telefonoError.style.display = 'block';
+                telefonoInput.style.borderColor = '#ef4444';
+                return false;
+            } else {
+                telefonoError.style.display = 'none';
+                telefonoInput.style.borderColor = '';
+                return true;
+            }
         }
 
         function showMessage(message, title = "Información") {
@@ -61,6 +97,18 @@
             cargarSalas();
             updateDateLabel();
             renderCalendar(); // Cargar calendario al inicio
+            
+            // Validación en tiempo real del teléfono
+            const telefonoInput = document.getElementById('telefono');
+            if (telefonoInput) {
+                // Restringir entrada solo a números
+                telefonoInput.addEventListener('input', function(e) {
+                    // Eliminar cualquier carácter que no sea número
+                    this.value = this.value.replace(/\D/g, '');
+                    validarTelefono();
+                });
+                telefonoInput.addEventListener('blur', validarTelefono);
+            }
         });
 
         function cargarSalas() {
@@ -555,7 +603,13 @@
                 appointmentData.patientEmail = document.getElementById('correo').value;
 
                 if (!appointmentData.patientNombre || !appointmentData.patientApellido || !appointmentData.patientTelefono || !appointmentData.patientEmail) {
-                    showMessage("Faltan datos del paciente (Nombre, Apellido, Teléfono, Email).", "Atención");
+                    showMessage("Faltan datos obligatorios del paciente.", "Atención");
+                    return;
+                }
+                
+                // Validar formato del teléfono
+                if (!validarTelefono()) {
+                    showMessage("El teléfono debe contener exactamente 10 dígitos numéricos.", "Error de Validación");
                     return;
                 }
 

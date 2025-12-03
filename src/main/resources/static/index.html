@@ -96,8 +96,9 @@
                                 <input type="text" id="apellidos" placeholder="Ingrese apellidos">
                             </div>
                             <div class="form-group">
-                                <label for="telefono">Teléfono</label>
-                                <input type="tel" id="telefono" placeholder="Ej: 999-123-4567">
+                                <label for="telefono">Teléfono (10 dígitos)</label>
+                                <input type="tel" id="telefono" placeholder="Ej: 9991234567" maxlength="10">
+                                <span id="telefonoError" style="color: #ef4444; font-size: 0.875rem; display: none; margin-top: 0.25rem;">⚠ El teléfono debe contener exactamente 10 dígitos numéricos</span>
                             </div>
                             <div class="form-group">
                                 <label for="correo">Correo electrónico</label>
