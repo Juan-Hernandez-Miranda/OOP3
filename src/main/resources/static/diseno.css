@@ -7,9 +7,9 @@
     --text-gray-900: #0f1724;
     --text-gray-600: #475569;
     --muted: #64748b;
-    --primary-600: #0369a1; /* deep sky blue */
+    --primary-600: #0369a1; /* azul cielo profundo */
     --primary-700: #075985;
-    --accent-500: #0ea5a4; /* teal */
+    --accent-500: #0ea5a4; /* verde azulado */
     --success-600: #059669;
     --glass: rgba(255,255,255,0.6);
 }
@@ -27,7 +27,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* --- SIDEBAR --- */
+/* --- BARRA LATERAL --- */
 .sidebar {
     width: 260px;
     background-color: linear-gradient(180deg, var(--bg-white), #fbfdff);
@@ -53,7 +53,7 @@ body {
 .nav-link.active { background-color: #e6f6ff; color: var(--primary-700); box-shadow: inset 3px 0 0 var(--primary-600); }
 .nav-icon { width: 20px; height: 20px; margin-right: 0.75rem; }
 
-/* --- MAIN CONTENT --- */
+/* --- CONTENIDO PRINCIPAL --- */
 .main-content {
     flex: 1;
     display: flex;
@@ -86,7 +86,7 @@ body {
 }
 .btn-add:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(3,105,161,0.14); }
 
-/* Calendario Grid */
+/* Cuadricula del calendario */
 .calendar-container { flex: 1; padding: 1.25rem; overflow-y: auto; }
 .calendar-grid {
     display: grid; grid-template-columns: repeat(6, 1fr);
@@ -169,7 +169,7 @@ body {
 
 .modal-body p { margin-bottom: 0.5rem; font-size: 0.95rem; color: var(--muted); }
 
-/* Responsive: collapse sidebar on small screens */
+/* Adaptativo: colapsar barra lateral en pantallas pequenas */
 @media (max-width: 900px) {
     .sidebar { width: 64px; }
     .sidebar-header span { display: none; }

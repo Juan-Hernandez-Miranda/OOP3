@@ -1,10 +1,10 @@
 
-    //LÓGICA JAVASCRIPT (Conectada al Backend)
+    //LOGICA JAVASCRIPT (Conectada al Backend)
         const API_BASE = '/api';
 
         // --- Funciones del Modal ---//hecho por alexander
         function openModal() {
-            const hoy = new Date().toISOString().split('T')[0];// se añade logica para evitar fechas pasadas
+            const hoy = new Date().toISOString().split('T')[0];// se anade logica para evitar fechas pasadas
             document.getElementById('fecha').min = hoy;
             document.getElementById('createModal').classList.add('active');
         }
@@ -12,7 +12,7 @@
         function closeModal() {
             document.getElementById('createModal').classList.remove('active');
             document.getElementById('citaForm').reset();
-            // Ocultar mensaje de error de teléfono
+            // Ocultar mensaje de error de telefono
             const telefonoError = document.getElementById('telefonoError');
             if (telefonoError) {
                 telefonoError.style.display = 'none';
@@ -29,13 +29,13 @@
             }
         }
 
-        // Función para validar teléfono
+        // Funcion para validar telefono
         function validarTelefono() {
             const telefonoInput = document.getElementById('telefono');
             const telefonoError = document.getElementById('telefonoError');
             const telefono = telefonoInput.value.trim();
             
-            // Validar que solo contenga números y tenga exactamente 10 dígitos
+            // Validar que solo contenga numeros y tenga exactamente 10 digitos
             const telefonoRegex = /^\d{10}$/;
             
             if (telefono && !telefonoRegex.test(telefono)) {
@@ -60,7 +60,7 @@
             document.getElementById('messageModal').classList.remove('active');
         }
 
-        // --- Lógica de Confirmación ---
+        // --- Logica de Confirmacion ---
         let onConfirmAction = null;
 
         function showConfirm(message, onConfirm, title = "Confirmación") {
@@ -68,7 +68,7 @@
             document.getElementById('confirmBody').textContent = message;
             document.getElementById('confirmModal').classList.add('active');
             
-            // Guardamos la acción a ejecutar
+            // Guardamos la accion a ejecutar
             onConfirmAction = onConfirm;
         }
 
@@ -77,7 +77,7 @@
             onConfirmAction = null;
         }
 
-        // Asignar evento al botón de confirmar una sola vez
+        // Asignar evento al boton de confirmar una sola vez
         document.getElementById('confirmBtnAction').addEventListener('click', function() {
             if (onConfirmAction) {
                 onConfirmAction();
@@ -98,12 +98,12 @@
             updateDateLabel();
             renderCalendar(); // Cargar calendario al inicio
             
-            // Validación en tiempo real del teléfono
+            // Validacion en tiempo real del telefono
             const telefonoInput = document.getElementById('telefono');
             if (telefonoInput) {
-                // Restringir entrada solo a números
+                // Restringir entrada solo a numeros
                 telefonoInput.addEventListener('input', function(e) {
-                    // Eliminar cualquier carácter que no sea número
+                    // Eliminar cualquier caracter que no sea numero
                     this.value = this.value.replace(/\D/g, '');
                     validarTelefono();
                 });
@@ -162,7 +162,7 @@
             const therapyFields = document.getElementById('therapyFields');
             const paymentFields = document.getElementById('paymentFields');
 
-            // Reset displays
+            // Reiniciar visualizaciones
             newPatientFields.style.display = 'none';
             existingPatientFields.style.display = 'none';
             therapyFields.style.display = 'none';
@@ -175,7 +175,7 @@
                 therapyFields.style.display = 'grid';
                 paymentFields.style.display = 'grid';
             } else {
-                // Default behavior for other types
+                // Comportamiento por defecto para otros tipos
                 if (type) {
                      existingPatientFields.style.display = 'grid';
                 }
@@ -222,7 +222,7 @@
         function getMonday(d) {
             d = new Date(d);
             var day = d.getDay(),
-                diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+                diff = d.getDate() - day + (day == 0 ? -6 : 1); // ajustar cuando el dia es domingo
             return new Date(d.setDate(diff));
         }
 
@@ -282,7 +282,7 @@
             document.getElementById('detailRoom').textContent = appt.roomNombre || '---';
             document.getElementById('detailTherapist').textContent = appt.therapistNombre;
             
-            // Normalizar estado a mayúsculas para comparación
+            // Normalizar estado a mayusculas para comparacion
             const status = appt.status ? appt.status.toUpperCase() : 'PENDIENTE';
             document.getElementById('detailStatus').textContent = status;
 
@@ -294,7 +294,7 @@
                 btnCancel.onclick = () => cancelAppointment(appt.id);
             }
 
-            // Botón reprogramar
+            // Boton reprogramar
             const btnRescheduleOpen = document.getElementById('btnRescheduleOpen');
             if (btnRescheduleOpen) {
                 btnRescheduleOpen.onclick = () => openRescheduleModal(appt);
@@ -338,7 +338,7 @@
             const grid = document.getElementById('calendarGrid');
             grid.innerHTML = ''; // Limpiar
 
-            // Definir días a mostrar
+            // Definir dias a mostrar
             let daysToShow = [];
             if (currentView === 'week') {
                 const monday = getMonday(currentDate);
@@ -358,7 +358,7 @@
             timeHeader.textContent = 'Hora';
             grid.appendChild(timeHeader);
 
-            // Columnas Días
+            // Columnas Dias
             const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
             daysToShow.forEach(d => {
                 const header = document.createElement('div');
@@ -375,12 +375,12 @@
                 timeCell.textContent = `${hour}:00`;
                 grid.appendChild(timeCell);
 
-                // Celdas para cada día
+                // Celdas para cada dia
                 daysToShow.forEach(dayDate => {
                     const cell = document.createElement('div');
                     cell.className = 'grid-cell';
                     
-                    // Buscar TODAS las citas para este día y hora
+                    // Buscar TODAS las citas para este dia y hora
                     const cellAppointments = appointments.filter(a => {
                         const aDate = new Date(a.start);
                         return aDate.getDate() === dayDate.getDate() && 
@@ -393,7 +393,7 @@
                         const card = document.createElement('div');
                         card.className = 'appointment-card';
                         
-                        // Normalizar estado a mayúsculas
+                        // Normalizar estado a mayusculas
                         const status = appt.status ? appt.status.toUpperCase() : 'PENDIENTE';
 
                         if (status === 'CANCELADO') {
@@ -424,14 +424,14 @@
                 btnLeft.style.color = 'white';
                 btnRight.style.backgroundColor = '#e5e7eb';
                 btnRight.style.color = 'var(--text-gray-800)';
-                // Ajustar grid CSS para semana (6 columnas)
+                // Ajustar cuadricula CSS para semana (6 columnas)
                 document.getElementById('calendarGrid').style.gridTemplateColumns = 'repeat(6, 1fr)';
             } else {
                 btnRight.style.backgroundColor = 'var(--blue-600)';
                 btnRight.style.color = 'white';
                 btnLeft.style.backgroundColor = '#e5e7eb';
                 btnLeft.style.color = 'var(--text-gray-800)';
-                // Ajustar grid CSS para día (2 columnas: Hora + Día)
+                // Ajustar cuadricula CSS para dia (2 columnas: Hora + Dia)
                 document.getElementById('calendarGrid').style.gridTemplateColumns = 'repeat(2, 1fr)';
             }
             updateDateLabel();
@@ -447,12 +447,12 @@
                     data.forEach(t => {
                         const option = document.createElement('option');
                         option.value = t.id; 
-                        // Usamos t.name porque así se llama en la clase Java
+                        // Usamos t.name porque asi se llama en la clase Java
                         option.textContent = t.name; 
                         select.appendChild(option);
                     });
 
-                    // También popular select del modal de reprogramar si existe
+                    // Tambien popular select del modal de reprogramar si existe
                     const resSelect = document.getElementById('rescheduleTherapistSelect');
                     if (resSelect) {
                         resSelect.innerHTML = '<option value="">-- Seleccione un Terapeuta --</option>';
@@ -469,8 +469,8 @@
 
         // --- Reprogramar / Actualizar Cita ---
         function openRescheduleModal(appt) {
-            // Prefill values
-            const hoy = new Date().toISOString().split('T')[0];// se añade logica para evitar fechas pasadas(hecho por rolando)
+            // Rellenar valores previos
+            const hoy = new Date().toISOString().split('T')[0];// se anade logica para evitar fechas pasadas(hecho por rolando)
             document.getElementById('rescheduleDate').min = hoy;
             const start = new Date(appt.start);
             document.getElementById('rescheduleDate').value = start.toISOString().split('T')[0];
@@ -480,7 +480,7 @@
             document.getElementById('rescheduleDuration').value = duration;
             const resSel = document.getElementById('rescheduleTherapistSelect');
             if (resSel) {
-                // intentar seleccionar terapeuta por id si está disponible
+                // intentar seleccionar terapeuta por id si esta disponible
                 for (let i=0;i<resSel.options.length;i++){
                     if (appt.therapistId && resSel.options[i].value == appt.therapistId) {
                         resSel.selectedIndex = i; break;
@@ -607,14 +607,14 @@
                     return;
                 }
                 
-                // Validar formato del teléfono
+                // Validar formato del telefono
                 if (!validarTelefono()) {
                     showMessage("El teléfono debe contener exactamente 10 dígitos numéricos.", "Error de Validación");
                     return;
                 }
 
             } else {
-                // CITA_DE_TERAPIA or others
+                // CITA_DE_TERAPIA u otros
                 const pId = document.getElementById('patientSelect').value;
                 if (!pId) {
                     showMessage("Seleccione un paciente.", "Atención");
@@ -626,11 +626,11 @@
                 const cuota = document.getElementById('cuota').value;
                 if (cuota) appointmentData.amountMx = parseFloat(cuota);
                 
-                // Validación de Comprobante de Pago
+                // Validacion de comprobante de pago
                 const fileInput = document.getElementById('comprobante');
                // if (sessionTypeValue === 'CITA_DE_TERAPIA') {
                     //if (fileInput.files.length === 0) {
-                   //     showMessage("Falta documentación: Debe subir el comprobante de pago.", "Atención");
+                   //     showMessage("Falta documentacion: Debe subir el comprobante de pago." "Atencion");
                  //       return;
                     //}
               //  }
@@ -653,27 +653,27 @@
                     showMessage(`¡Cita agendada con éxito!`, "Éxito");
                     document.getElementById('citaForm').reset();
                     closeModal();
-                    toggleFormFields(); // Reset visibility
+                    toggleFormFields(); // Reiniciar visibilidad
                 } else {
                     const errorText = await response.text();
                     // Intentar parsear si es JSON para mostrar mensaje limpio
                     try {
                         const errObj = JSON.parse(errorText);
                         
-                        // Si hay un mensaje explícito (ej: RuntimeException message)
+                        // Si hay un mensaje explicito (ej: mensaje de RuntimeException)
                         if (errObj.message && errObj.message !== 'No message available') {
                             showMessage(errObj.message, "Error");
                         } 
-                        // Si es un mapa de errores (fallback)
+                        // Si es un mapa de errores (respaldo)
                         else if (typeof errObj === 'object') {
                             let msg = "";
                             for (const key in errObj) {
-                                // Filtrar campos técnicos para no ensuciar el mensaje
+                                // Filtrar campos tecnicos para no ensuciar el mensaje
                                 if (key !== 'trace' && key !== 'timestamp' && key !== 'path' && key !== 'status' && key !== 'error') {
                                     msg += `- ${key}: ${errObj[key]}\n`;
                                 }
                             }
-                            // Si quedó vacío, usar el error genérico
+                            // Si quedo vacio usar el error generico
                             if (!msg && errObj.error) msg = errObj.error;
                             
                             showMessage(msg || "Ocurrió un error inesperado.", "Error");

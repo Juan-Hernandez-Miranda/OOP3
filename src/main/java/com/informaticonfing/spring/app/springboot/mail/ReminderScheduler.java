@@ -50,8 +50,7 @@ public class ReminderScheduler {
                 a.setReminderSent(true);
                 appointmentRepository.save(a);
             } catch (Exception e) {
-                // En caso de fallo en envío, se ignora para reintento futuro
-                // (no marcamos como enviado)
+               
                 System.err.println("Error enviando recordatorio a " + to + ": " + e.getMessage());
             }
         }

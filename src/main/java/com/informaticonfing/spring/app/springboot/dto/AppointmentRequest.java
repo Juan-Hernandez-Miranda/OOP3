@@ -60,7 +60,7 @@ public class AppointmentRequest {
         @Schema(description = "Nombre del archivo del comprobante de pago.", example = "comprobante.pdf")
         private String paymentProof;
 
-        // --------------------- GETTERS & SETTERS ---------------------
+        // --------------------- GETTERS Y SETTERS ---------------------
 
         public SessionType getSessionType() {
                 return sessionType;

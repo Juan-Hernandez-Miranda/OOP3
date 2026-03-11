@@ -13,7 +13,7 @@ import jakarta.mail.internet.MimeMessage;
 import java.util.Properties;
 
 /**
- * Provee un bean de JavaMailSender. Si no hay SMTP configurado (spring.mail.host),
+ * Provee un bean de JavaMailSender. Si no hay SMTP configurado (spring.mail.host)
  * registra un sender no-op que imprime los mensajes en consola para desarrollo.
  */
 @Configuration
@@ -37,7 +37,7 @@ public class MailConfig {
             return impl;
         }
 
-        // No SMTP configured: return a No-Op sender that logs to console.
+        // Sin SMTP configurado: devuelve un emisor sin operacion que registra en consola.
         return new NoOpJavaMailSender();
     }
 
@@ -52,7 +52,7 @@ public class MailConfig {
             try {
                 return new MimeMessage(Session.getDefaultInstance(new Properties()), contentStream);
             } catch (Exception ex) {
-                // fallback: return an empty MimeMessage
+                // respaldo: devuelve un MimeMessage vacio
                 return new MimeMessage(Session.getDefaultInstance(new Properties()));
             }
         }

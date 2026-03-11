@@ -32,7 +32,7 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // Cargar Terapeutas
+        
         if (therapistRepo.count() == 0) {
             therapistRepo.save(new Therapist("Dr. Juan Pérez"));
             therapistRepo.save(new Therapist("Lic. Ana Gómez"));
@@ -40,7 +40,7 @@ public class DataLoader implements CommandLineRunner {
             System.out.println("✅ Terapeutas de prueba cargados.");
         }
 
-        // Cargar Pacientes
+      
         if (patientRepo.count() == 0) {
             Patient p = new Patient();
             p.setFirstName("Paciente");
@@ -51,14 +51,13 @@ public class DataLoader implements CommandLineRunner {
             System.out.println("✅ Paciente de prueba cargado (ID 1).");
         }
 
-        // Cargar Salas
         if (roomRepo.count() == 0) {
             roomRepo.save(new Room("Consultorio 1"));
             roomRepo.save(new Room("Consultorio 2"));
             roomRepo.save(new Room("Consultorio 3"));
             System.out.println("✅ 3 Salas de prueba cargadas.");
         } else if (roomRepo.count() < 3) {
-            // Si ya existen algunas pero no las 3, agregamos las que falten (simple check)
+           
             if (roomRepo.findByNombre("Consultorio 2").isEmpty()) {
                 roomRepo.save(new Room("Consultorio 2"));
             }
@@ -68,8 +67,7 @@ public class DataLoader implements CommandLineRunner {
             System.out.println("✅ Salas complementarias cargadas.");
         }
 
-        // Rellenar folios faltantes para pacientes existentes (6 dígitos aleatorios,
-        // únicos)
+     
         List<Patient> patients = patientRepo.findAll();
         Random rnd = new Random();
         for (Patient p : patients) {
@@ -80,7 +78,7 @@ public class DataLoader implements CommandLineRunner {
                     folio = String.format("%06d", rnd.nextInt(1_000_000));
                     attempts++;
                     if (attempts > 200) {
-                        // Fallback: use padded ID
+                        // Respaldo: usar ID con ceros a la izquierda
                         folio = String.format("%06d", p.getId());
                         break;
                     }
@@ -91,7 +89,7 @@ public class DataLoader implements CommandLineRunner {
             }
         }
 
-        // Rellenar estado de citas existentes a 'pendiente' si no tienen
+       
         List<Appointment> appointments = appointmentRepo.findAll();
         for (Appointment ap : appointments) {
             if (ap.getAppointmentStatus() == null) {

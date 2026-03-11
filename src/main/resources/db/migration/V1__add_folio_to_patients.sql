@@ -1,6 +1,6 @@
--- Flyway migration V1: add folio column to patients table if missing (MySQL compatible)
+-- Migracion Flyway V1: agregar columna folio a la tabla patients si falta (compatible con MySQL)
 
--- Add column only if it does not exist
+-- Agregar columna solo si no existe
 SET @col_exists = (
   SELECT COUNT(*) FROM information_schema.COLUMNS
   WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'patients' AND COLUMN_NAME = 'folio'
@@ -10,7 +10,7 @@ PREPARE stmt FROM @sql;
 EXECUTE stmt;
 DEALLOCATE PREPARE stmt;
 
--- Create unique index only if it does not exist
+-- Crear indice unico solo si no existe
 SET @idx_exists = (
   SELECT COUNT(*) FROM information_schema.STATISTICS
   WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'patients' AND INDEX_NAME = 'idx_patients_folio'

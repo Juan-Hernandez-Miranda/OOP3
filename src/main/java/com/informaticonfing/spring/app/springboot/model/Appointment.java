@@ -6,7 +6,7 @@ import com.informaticonfing.spring.app.springboot.model.AppointmentStatus;
 
 @Entity
 @Table(name = "appointments")
-public class Appointment { // Nombre corregido (Mayúscula)
+public class Appointment { // Nombre corregido (Mayuscula)
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +17,7 @@ public class Appointment { // Nombre corregido (Mayúscula)
 
     @ManyToOne
     @JoinColumn(name = "patient_id")
-    private Patient patient; // Corregido: 'Patient' con P mayúscula
+    private Patient patient; // Corregido: 'Patient' con P mayuscula
 
     @ManyToOne
     @JoinColumn(name = "therapist_id")

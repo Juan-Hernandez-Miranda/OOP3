@@ -48,7 +48,7 @@ public class AppointmentService {
                 }
 
                 // 3. Validar Horario (9:00 - 17:30)
-                // Como son bloques de 1 hora, la última cita puede empezar a las 16:00 (termina
+                // Como son bloques de 1 hora la ultima cita puede empezar a las 16:00 (termina
                 // 17:00).
                 if (req.getStartTime().getHour() < 9 || req.getStartTime().getHour() > 16) {
                         throw new RuntimeException(
@@ -70,7 +70,7 @@ public class AppointmentService {
                                         .orElseThrow(() -> new RuntimeException(
                                                         "Paciente no encontrado."));
 
-                        // Validar que el paciente no tenga otra cita el mismo día
+                        // Validar que el paciente no tenga otra cita el mismo dia
                         LocalDateTime startOfDay = req.getDate().atStartOfDay();
                         LocalDateTime endOfDay = req.getDate().atTime(LocalTime.MAX);
                         long existingAppts = appointmentRepo.countAppointmentsByPatientAndDate(
@@ -92,7 +92,7 @@ public class AppointmentService {
                         patient.setEmail(req.getPatientEmail());
                         // Guardar primero para obtener ID
                         patient = patientRepo.save(patient);
-                        // Generar folio aleatorio único de 6 dígitos
+                        // Generar folio aleatorio unico de 6 digitos
                         Random rnd = new Random();
                         String generatedFolio;
                         int attempts = 0;
@@ -100,7 +100,7 @@ public class AppointmentService {
                                 generatedFolio = String.format("%06d", rnd.nextInt(1_000_000));
                                 attempts++;
                                 if (attempts > 100) {
-                                        // Fallback determinístico si hay demasiados intentos
+                                        // Respaldo deterministico si hay demasiados intentos
                                         generatedFolio = String.format("%06d", patient.getId());
                                         break;
                                 }
@@ -119,19 +119,19 @@ public class AppointmentService {
                 LocalDateTime start = LocalDateTime.of(req.getDate(), req.getStartTime());
                 LocalDateTime end = start.plusMinutes(req.getDurationMinutes() != null ? req.getDurationMinutes() : 60);
 
-                // 4. Validar Máximo de Citas Globales (Regla de Negocio: Máx 2 simultáneas)
+                // 4. Validar Maximo de Citas Globales (Regla de Negocio: Max 2 simultaneas)
                 long activeAppointmentsCount = appointmentRepo.countActiveAppointmentsInTimeRange(start, end);
                 if (activeAppointmentsCount >= 2) {
                         throw new RuntimeException(
                                         "Lo sentimos, ya se ha alcanzado el límite máximo de citas (2) para este horario.");
                 }
 
-                // 5. Validar Solapamiento Específico (Sala o Terapeuta)
+                // 5. Validar Solapamiento Especifico (Sala o Terapeuta)
                 List<Appointment> overlaps = appointmentRepo.findOverlappingAppointments(
                                 start, end, req.getRoomId(), req.getTherapistId());
 
                 if (!overlaps.isEmpty()) {
-                        // Check specific conflict
+                        // Verificar conflicto especifico
                         for (Appointment overlap : overlaps) {
                                 if (overlap.getRoom().getId().equals(req.getRoomId())) {
                                         throw new RuntimeException("La sala está ocupada en dicho rango de horario.");
@@ -141,7 +141,7 @@ public class AppointmentService {
                                                         "El terapeuta está ocupado en dicho rango de horario.");
                                 }
                         }
-                        // Fallback
+                        // Respaldo
                         throw new RuntimeException(
                                         "El horario, sala o terapeuta no están disponibles (Conflicto con otra cita).");
                 }
@@ -155,7 +155,7 @@ public class AppointmentService {
                 a.setEndDateTime(end);
                 a.setPaymentProofPath(req.getPaymentProof());
                 a.setComments(comments);
-                // Set default status
+                // Establecer estado por defecto
                 a.setAppointmentStatus(AppointmentStatus.PENDIENTE);
 
                 Appointment saved = appointmentRepo.save(a);
@@ -252,7 +252,7 @@ public class AppointmentService {
                 Appointment a = appointmentRepo.findById(appointmentId)
                                 .orElseThrow(() -> new RuntimeException("Cita no encontrada."));
 
-                // Validaciones similares a create (no fines de semana)
+                // Validaciones similares a crear (no fines de semana)
                 java.time.DayOfWeek day = req.getDate().getDayOfWeek();
                 if (day == java.time.DayOfWeek.SATURDAY || day == java.time.DayOfWeek.SUNDAY) {
                         throw new RuntimeException("No se pueden reprogramar citas a fines de semana.");

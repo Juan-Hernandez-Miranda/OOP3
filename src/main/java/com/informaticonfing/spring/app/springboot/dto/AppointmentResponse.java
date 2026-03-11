@@ -29,7 +29,7 @@ public class AppointmentResponse {
     @Schema(description = "Estado de la cita: pendiente, completado o cancelado", example = "pendiente")
     private String appointmentStatus;
 
-    // 👇 ESTE es el constructor que está usando tu service
+    // ESTE es el constructor que esta usando tu service
     public AppointmentResponse(String message, Long appointmentId, String patientFolio, String appointmentStatus) {
         this.message = message;
         this.appointmentId = appointmentId;
